@@ -5,7 +5,9 @@ package main
 
 import "github.com/nrhox/lightgate/cmd"
 
+var version = "dev"
+
 func main() {
 	// execute server
-	cmd.Execute()
+	cmd.Execute(version)
 }

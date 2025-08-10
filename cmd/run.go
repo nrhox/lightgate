@@ -11,9 +11,7 @@ import (
 	"github.com/nrhox/lightgate/internal"
 )
 
-const version = "0.1.2"
-
-func Execute() {
+func Execute(version string) {
 	flagsOption := internal.ReadFlags()
 
 	// if no argument
@@ -23,7 +21,7 @@ func Execute() {
 	}
 
 	if *flagsOption.ShowVersion {
-		fmt.Println("lightgate versi", version)
+		fmt.Println(version)
 		os.Exit(0)
 	}
 
