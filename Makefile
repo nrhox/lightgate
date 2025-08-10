@@ -1,7 +1,7 @@
 GOFMT?=gofmt "-s"
 BINARY_NAME=lightgate
-VERSION=$(shell git describe --tags --always)
-BUILD_RELEASE=go build -ldflags="-s -w -X main.version=$(VERSION)" -trimpath -o
+VERSION=$(shell git describe --tags --abbrev=0)
+BUILD_RELEASE=go build -ldflags="-s -w -X main.version=$(VERSION)" -o
 BUILD_DEV=go build -o
 BUILD_DIR=./build
 
@@ -35,5 +35,4 @@ build-linux:
 build-macos:
 	GOOS=darwin GOARCH=amd64 $(BUILD_RELEASE) $(BUILD_DIR)/$(BINARY_NAME)$(VERSION)-macos lightgate.go
 
-build-all:
-	build-windows build-linux build-macos
+build-all: build-win build-linux build-macos
