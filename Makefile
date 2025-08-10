@@ -1,5 +1,9 @@
-GOFMT ?= gofmt "-s"
-BUILD = go build -ldflags="-s -w" -trimpath -o
+GOFMT?=gofmt "-s"
+BINARY_NAME=lightgate
+VERSION=$(shell git describe --tags --always)
+BUILD_RELEASE=go build -ldflags="-s -w -X main.version=$(VERSION)" -trimpath -o
+BUILD_DEV=go build -o
+BUILD_DIR=./build
 
 .PHONY: fmt
 fmt:
@@ -19,8 +23,17 @@ check-fmt:
 		echo "All files are properly formatted"; \
 	fi
 
-build:
-	$(BUILD) lightgate lightgate.go
+build-dev:
+	$(BUILD_DEV) $(BINARY_NAME) lightgate.go
 
 build-win:
-	$(BUILD) lightgate.exe lightgate.go
+	GOOS=windows GOARCH=amd64 $(BUILD_RELEASE) $(BUILD_DIR)/$(BINARY_NAME)$(VERSION)-win.exe lightgate.go
+
+build-linux:
+	GOOS=linux GOARCH=amd64 $(BUILD_RELEASE) $(BUILD_DIR)/$(BINARY_NAME)$(VERSION)-linux lightgate.go
+
+build-macos:
+	GOOS=darwin GOARCH=amd64 $(BUILD_RELEASE) $(BUILD_DIR)/$(BINARY_NAME)$(VERSION)-macos lightgate.go
+
+build-all:
+	build-windows build-linux build-macos
