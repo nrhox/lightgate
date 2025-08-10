@@ -7,7 +7,7 @@ The program starts a simple HTTP server to serve files and handle requests. It a
 ### Source code
 
 ```
-go install githun.com/nrhox/lightgate
+go install github.com/nrhox/lightgate
 ```
 
 ## Usage
